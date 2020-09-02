@@ -57,37 +57,39 @@ export default class MiniSlider extends Slider {
     }
 
     init() {
-        this.container.style.cssText = `
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            overflow: hidden;
-        `;
+        try {
+            this.container.style.cssText = `
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                overflow: hidden;
+            `;
 
-        this.bindTriggers();
-        this.decorizeSlides();
+            this.bindTriggers();
+            this.decorizeSlides();
 
-        let paused = false;
+            let paused = false;
 
-        if (this.autoplay) {
-            let paused;
-            paused = setInterval(() => this.nexSlide(), 5000);
-
-            this.slides[0].parentNode.addEventListener('mouseenter', () => {
-                clearInterval(paused);
-            });
-
-            this.next.parentNode.addEventListener('mouseenter', () => {
-                clearInterval(paused);
-            });
-        
-            this.slides[0].parentNode.addEventListener('mouseleave', () => {
+            if (this.autoplay) {
+                let paused;
                 paused = setInterval(() => this.nexSlide(), 5000);
-            });
 
-            this.next.parentNode.addEventListener('mouseleave', () => {
-                paused = setInterval(() => this.nexSlide(), 5000);
-            });
-        }
-    }
+                this.slides[0].parentNode.addEventListener('mouseenter', () => {
+                    clearInterval(paused);
+                });
+
+                this.next.parentNode.addEventListener('mouseenter', () => {
+                    clearInterval(paused);
+                });
+            
+                this.slides[0].parentNode.addEventListener('mouseleave', () => {
+                    paused = setInterval(() => this.nexSlide(), 5000);
+                });
+
+                this.next.parentNode.addEventListener('mouseleave', () => {
+                    paused = setInterval(() => this.nexSlide(), 5000);
+                });
+            }
+        } catch(e) {}
+    } 
 }
